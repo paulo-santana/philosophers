@@ -3,6 +3,7 @@ NAME = philo
 vpath %.c src						\
 
 SRC = main.c						\
+	  ft_atoi.c						\
 
 OBJ_DIR = ./obj
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
@@ -25,7 +26,7 @@ fclean: clean
 re: fclean all
 
 run: $(NAME)
-	./$(NAME)
+	./$(NAME) 4 1000 200 300
 
 $(OBJ_DIR):
 	mkdir -p ./obj
