@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 08:25:13 by psergio-          #+#    #+#             */
-/*   Updated: 2022/02/23 08:39:10 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/02/23 08:43:58 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,16 @@ void	init_philosophers(pthread_t *ids, t_data *data)
 void	run_simulation(t_data *data)
 {
 	pthread_t	*philosopher_ids;
+	int			i;
 
 	philosopher_ids = malloc(sizeof(pthread_t) * data->num_philosophers);
 	if (philosopher_ids == NULL)
 		return ;
 	init_philosophers(philosopher_ids, data);
+	i = 0;
+	while (i < data->num_philosophers)
+	{
+		pthread_join(philosopher_ids[i], NULL);
+		i++;
+	}
 }
