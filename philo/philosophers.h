@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 12:11:49 by psergio-          #+#    #+#             */
-/*   Updated: 2022/02/23 08:15:41 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/02/23 08:17:57 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ struct s_data {
 	unsigned int	time_to_die;
 	unsigned int	time_to_eat;
 	unsigned int	time_to_sleep;
-	long			started_at;
+	struct timeval	started_at;
 };
 
 struct s_philo {
