@@ -26,13 +26,21 @@ t_philo	*new_philosopher(int id, t_data *data)
 	philo->id = id;
 	philo->display_id = id + 1;
 	philo->data = data;
+	philo->last_meal = data->started_at;
 	return (philo);
 }
 
 void	*philosophize(void *data)
 {
-	philo_eat(data);
-	philo_sleep(data);
+	t_philo	*philo;
+
+	philo = data;
+	while (philo->data->no_one_died)
+	{
+		philo_eat(data);
+		philo_sleep(data);
+		philo_think(data);
+	}
 	return (data);
 }
 
@@ -61,6 +69,7 @@ void	init_forks(t_data *data)
 	while (i < data->num_philosophers)
 	{
 		pthread_mutex_init(&data->forks[i].mutex, NULL);
+		data->forks[i].is_locked = 0;
 		i++;
 	}
 }
