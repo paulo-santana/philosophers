@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 12:11:49 by psergio-          #+#    #+#             */
-/*   Updated: 2022/02/23 08:17:57 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/02/23 08:23:01 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,11 @@ typedef struct s_data	t_data;
 typedef struct s_philo	t_philo;
 
 struct s_data {
+	int				num_philosophers;
 	unsigned int	time_to_die;
 	unsigned int	time_to_eat;
 	unsigned int	time_to_sleep;
+	unsigned int	max_meals;
 	struct timeval	started_at;
 };
 
