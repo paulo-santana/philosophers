@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 12:11:49 by psergio-          #+#    #+#             */
-/*   Updated: 2022/02/23 08:23:01 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/02/23 08:38:09 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ struct s_philo {
 	int		id;
 	t_data	*data;
 };
+
+void	run_simulation(t_data *data);
 
 int		ft_atoi(const char *str);
 

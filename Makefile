@@ -3,6 +3,7 @@ NAME = philo/philo
 vpath %.c philo						\
 
 SRC = main.c						\
+	  simulation.c					\
 	  ft_atoi.c						\
 	  # timers.c						\
 	  # init.c						\
