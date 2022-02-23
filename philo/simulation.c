@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 08:25:13 by psergio-          #+#    #+#             */
-/*   Updated: 2022/02/23 09:28:58 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/02/23 20:13:35 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	*philosophize(void *data)
 	t_philo	*philo;
 
 	philo = data;
-	while (philo->data->no_one_died)
+	while (!check_someone_died(philo->data))
 	{
 		philo_eat(data);
 		if (philo->dinners_had >= philo->data->max_meals)
@@ -72,13 +72,29 @@ void	init_forks(t_data *data)
 	while (i < data->num_philosophers)
 	{
 		pthread_mutex_init(&data->forks[i].mutex, NULL);
+		pthread_mutex_init(&data->forks[i].is_locked_mutex, NULL);
 		data->forks[i].is_locked = 0;
 		i++;
 	}
 }
 
+void	destroy_forks(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->num_philosophers)
+	{
+		pthread_mutex_destroy(&data->forks[i].mutex);
+		pthread_mutex_destroy(&data->forks[i].is_locked_mutex);
+		i++;
+	}
+	free(data->forks);
+}
+
 void	run_simulation(t_data *data)
 {
+	t_philo		*philo;
 	pthread_t	*philosopher_ids;
 	int			i;
 
@@ -90,7 +106,10 @@ void	run_simulation(t_data *data)
 	i = 0;
 	while (i < data->num_philosophers)
 	{
-		pthread_join(philosopher_ids[i], NULL);
+		pthread_join(philosopher_ids[i], (void **)&philo);
+		free(philo);
 		i++;
 	}
+	destroy_forks(data);
+	free(philosopher_ids);
 }

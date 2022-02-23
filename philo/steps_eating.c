@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 09:55:16 by psergio-          #+#    #+#             */
-/*   Updated: 2022/02/23 10:02:15 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/02/23 20:06:14 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ void	pickup_forks(t_philo *philo, t_fork *right, t_fork *left)
 		second = right;
 	}
 	pthread_mutex_lock(&first->mutex);
-	first->is_locked = 1;
+	set_is_locked(first, 1);
 	console_log(philo, "has taken a fork");
 	pthread_mutex_lock(&second->mutex);
-	second->is_locked = 1;
+	set_is_locked(second, 1);
 	console_log(philo, "has taken a fork");
 }
 
@@ -50,9 +50,9 @@ int	can_eat(t_philo *philo, t_fork *right_fork, t_fork *left_fork)
 	if (right_fork == left_fork)
 		return (0);
 	if (get_elapsed_time(philo->last_meal) > philo->data->time_to_die / 2
-		&& !right_fork->is_locked)
+		&& !is_locked(right_fork))
 		return (1);
-	if (right_fork->is_locked || left_fork->is_locked)
+	if (is_locked(right_fork) || is_locked(left_fork))
 		return (0);
 	return (1);
 }
@@ -60,7 +60,7 @@ int	can_eat(t_philo *philo, t_fork *right_fork, t_fork *left_fork)
 void	handle_death(t_philo *philo)
 {
 	console_log(philo, "died");
-	philo->data->no_one_died = 0;
+	set_someone_died(philo->data, 1);
 }
 
 void	philo_eat(t_philo *philo)
@@ -68,7 +68,7 @@ void	philo_eat(t_philo *philo)
 	t_fork	*right;
 	t_fork	*left;
 
-	if (!philo->data->no_one_died)
+	if (check_someone_died(philo->data))
 		return ;
 	identify_forks(philo, &right, &left);
 	while (!can_eat(philo, right, left))
@@ -83,7 +83,7 @@ void	philo_eat(t_philo *philo)
 	usleep(philo->data->time_to_eat * 1000);
 	philo->dinners_had++;
 	pthread_mutex_unlock(&right->mutex);
-	right->is_locked = 0;
+	set_is_locked(right, 0);
 	pthread_mutex_unlock(&left->mutex);
-	left->is_locked = 0;
+	set_is_locked(left, 0);
 }

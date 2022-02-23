@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 12:11:49 by psergio-          #+#    #+#             */
-/*   Updated: 2022/02/23 10:01:18 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/02/23 20:03:50 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct s_fork	t_fork;
 
 struct s_fork {
 	int				is_locked;
+	pthread_mutex_t	is_locked_mutex;
 	pthread_mutex_t	mutex;
 };
 
@@ -37,6 +38,8 @@ struct s_data {
 	t_fork			*forks;
 	struct timeval	started_at;
 	int				no_one_died;
+	pthread_mutex_t	no_one_died_mutex;
+	pthread_mutex_t	print_lock;
 };
 
 struct s_philo {
@@ -56,6 +59,11 @@ void	philo_think(t_philo *philo);
 int		ft_atoi(const char *str);
 
 long	get_elapsed_time(struct timeval since);
+
+void	set_is_locked(t_fork *fork, int value);
+int		is_locked(t_fork *fork);
+void	set_someone_died(t_data *data, int value);
+int		check_someone_died(t_data *data);
 
 void	console_log(t_philo *philo, char *message);
 

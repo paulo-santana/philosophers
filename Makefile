@@ -7,6 +7,7 @@ SRC = main.c						\
 	  steps.c						\
 	  steps_eating.c				\
 	  ft_atoi.c						\
+	  lock.c						\
 	  log.c							\
 	  time.c						\
 	  # init.c						\
@@ -15,13 +16,12 @@ OBJ_DIR = ./obj
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -g3 #-fsanitize=thread
+CFLAGS = -Wall -Werror -Wextra -g3
 RM = rm -rf
 
 all: $(NAME)
 
 $(NAME): $(OBJ_DIR) $(OBJ)
-	mkdir -p philo
 	$(CC) $(OBJ) -o $(NAME)
 
 clean:
@@ -33,7 +33,7 @@ fclean: clean
 re: fclean all
 
 run: $(NAME)
-	./$(NAME) 100 400 100 100 7
+	./$(NAME) 10 400 100 100 7
 
 $(OBJ_DIR):
 	mkdir -p ./obj
