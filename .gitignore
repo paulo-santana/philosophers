@@ -1,5 +1,4 @@
 *.o
-philo
 compile_commands.json
 vgcore.*
 .cache

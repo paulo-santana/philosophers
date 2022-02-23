@@ -1,9 +1,12 @@
-NAME = philo
+NAME = philo/philo
 
-vpath %.c src						\
+vpath %.c philo						\
 
 SRC = main.c						\
 	  ft_atoi.c						\
+	  # timers.c						\
+	  # init.c						\
+	  # log.c							\
 
 OBJ_DIR = ./obj
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
@@ -15,6 +18,7 @@ RM = rm -rf
 all: $(NAME)
 
 $(NAME): $(OBJ_DIR) $(OBJ)
+	mkdir -p philo
 	$(CC) $(OBJ) -o $(NAME)
 
 clean:
@@ -26,7 +30,7 @@ fclean: clean
 re: fclean all
 
 run: $(NAME)
-	./$(NAME) 4 1000 200 300
+	./$(NAME) 3 400 100 100 7
 
 $(OBJ_DIR):
 	mkdir -p ./obj
