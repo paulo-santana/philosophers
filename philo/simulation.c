@@ -27,6 +27,7 @@ t_philo	*new_philosopher(int id, t_data *data)
 	philo->display_id = id + 1;
 	philo->data = data;
 	philo->last_meal = data->started_at;
+	philo->dinners_had = 0;
 	return (philo);
 }
 
@@ -38,6 +39,8 @@ void	*philosophize(void *data)
 	while (philo->data->no_one_died)
 	{
 		philo_eat(data);
+		if (philo->dinners_had >= philo->data->max_meals)
+			break ;
 		philo_sleep(data);
 		philo_think(data);
 	}

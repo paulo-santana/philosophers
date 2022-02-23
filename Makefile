@@ -5,6 +5,7 @@ vpath %.c philo						\
 SRC = main.c						\
 	  simulation.c					\
 	  steps.c						\
+	  steps_eating.c				\
 	  ft_atoi.c						\
 	  log.c							\
 	  time.c						\
@@ -14,7 +15,7 @@ OBJ_DIR = ./obj
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -g3
+CFLAGS = -Wall -Werror -Wextra -g3 #-fsanitize=thread
 RM = rm -rf
 
 all: $(NAME)
@@ -32,7 +33,7 @@ fclean: clean
 re: fclean all
 
 run: $(NAME)
-	./$(NAME) 3 400 100 100 7
+	./$(NAME) 100 400 100 100 7
 
 $(OBJ_DIR):
 	mkdir -p ./obj

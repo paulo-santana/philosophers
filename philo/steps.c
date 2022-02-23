@@ -22,5 +22,5 @@ void	philo_sleep(t_philo *philo)
 void	philo_think(t_philo *philo)
 {
 	console_log(philo, "is thinking");
-	usleep(1000);
+	usleep(500);
 }

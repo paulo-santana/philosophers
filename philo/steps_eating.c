@@ -38,8 +38,10 @@ void	pickup_forks(t_philo *philo, t_fork *right, t_fork *left)
 		second = right;
 	}
 	pthread_mutex_lock(&first->mutex);
+	first->is_locked = 1;
 	console_log(philo, "has taken a fork");
 	pthread_mutex_lock(&second->mutex);
+	second->is_locked = 1;
 	console_log(philo, "has taken a fork");
 }
 
@@ -47,7 +49,8 @@ int	can_eat(t_philo *philo, t_fork *right_fork, t_fork *left_fork)
 {
 	if (right_fork == left_fork)
 		return (0);
-	if (get_elapsed_time(philo->last_meal) > philo->data->time_to_die / 2)
+	if (get_elapsed_time(philo->last_meal) > philo->data->time_to_die / 2
+		&& !right_fork->is_locked)
 		return (1);
 	if (right_fork->is_locked || left_fork->is_locked)
 		return (0);
@@ -76,7 +79,11 @@ void	philo_eat(t_philo *philo)
 	}
 	pickup_forks(philo, right, left);
 	console_log(philo, "is eating");
+	gettimeofday(&philo->last_meal, NULL);
 	usleep(philo->data->time_to_eat * 1000);
+	philo->dinners_had++;
 	pthread_mutex_unlock(&right->mutex);
+	right->is_locked = 0;
 	pthread_mutex_unlock(&left->mutex);
+	left->is_locked = 0;
 }
