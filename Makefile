@@ -4,10 +4,11 @@ vpath %.c philo						\
 
 SRC = main.c						\
 	  simulation.c					\
+	  steps.c						\
 	  ft_atoi.c						\
-	  # timers.c						\
+	  log.c							\
+	  time.c						\
 	  # init.c						\
-	  # log.c							\
 
 OBJ_DIR = ./obj
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
