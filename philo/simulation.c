@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 08:25:13 by psergio-          #+#    #+#             */
-/*   Updated: 2022/02/23 08:43:58 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/02/23 09:28:58 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,16 @@ t_philo	*new_philosopher(int id, t_data *data)
 	philo = malloc(sizeof(t_philo));
 	if (philo == NULL)
 		return (NULL);
-	philo->id = id + 1;
+	philo->id = id;
+	philo->display_id = id + 1;
 	philo->data = data;
 	return (philo);
 }
 
 void	*philosophize(void *data)
 {
-	printf("philosophizing...\n");
+	philo_eat(data);
+	philo_sleep(data);
 	return (data);
 }
 
@@ -48,6 +50,21 @@ void	init_philosophers(pthread_t *ids, t_data *data)
 	}
 }
 
+void	init_forks(t_data *data)
+{
+	int	i;
+
+	data->forks = malloc(sizeof(t_fork) * data->num_philosophers);
+	if (data->forks == NULL)
+		return ;
+	i = 0;
+	while (i < data->num_philosophers)
+	{
+		pthread_mutex_init(&data->forks[i].mutex, NULL);
+		i++;
+	}
+}
+
 void	run_simulation(t_data *data)
 {
 	pthread_t	*philosopher_ids;
@@ -56,6 +73,7 @@ void	run_simulation(t_data *data)
 	philosopher_ids = malloc(sizeof(pthread_t) * data->num_philosophers);
 	if (philosopher_ids == NULL)
 		return ;
+	init_forks(data);
 	init_philosophers(philosopher_ids, data);
 	i = 0;
 	while (i < data->num_philosophers)
