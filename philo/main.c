@@ -17,6 +17,7 @@ int main(int argc, char **argv)
 	data.time_to_die = ft_atoi(argv[2]);
 	data.time_to_eat = ft_atoi(argv[3]);
 	data.time_to_sleep = ft_atoi(argv[4]);
+	data.no_one_died = 1;
 	if (argc == 6)
 		data.max_meals = ft_atoi(argv[5]);
 	run_simulation(&data);
