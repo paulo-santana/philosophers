@@ -1,29 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   log.c                                              :+:      :+:    :+:   */
+/*   sleep.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/23 08:06:21 by psergio-          #+#    #+#             */
-/*   Updated: 2022/02/23 20:45:30 by psergio-         ###   ########.fr       */
+/*   Created: 2022/02/23 20:22:00 by psergio-          #+#    #+#             */
+/*   Updated: 2022/02/23 20:43:15 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-#include <pthread.h>
+#include <bits/types/struct_timeval.h>
+#include <sys/time.h>
+#include <unistd.h>
 
-void	console_log(t_philo *philo, char *message)
+int	pretend_sleep(t_philo *philo, long amount)
 {
-	long			milis;
-	pthread_mutex_t	*lock;
+	struct timeval	started_sleeping;
+	long			current;
 
-	lock = &philo->data->print_lock;
-	pthread_mutex_lock(lock);
-	if (!check_someone_died(philo->data))
+	gettimeofday(&started_sleeping, NULL);
+	current = 0;
+	while (current < amount)
 	{
-		milis = get_elapsed_time(philo->data->started_at);
-		printf("%ld %d %s\n", milis, philo->display_id, message);
+		usleep(100);
+		current = get_elapsed_time(philo->last_meal);
+		if (current >= philo->data->time_to_die)
+			return (0);
 	}
-	pthread_mutex_unlock(lock);
+	return (1);
 }

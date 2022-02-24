@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 09:55:16 by psergio-          #+#    #+#             */
-/*   Updated: 2022/02/23 20:06:14 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/02/23 20:46:02 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,10 @@ int	can_eat(t_philo *philo, t_fork *right_fork, t_fork *left_fork)
 
 void	handle_death(t_philo *philo)
 {
+	pthread_mutex_lock(&philo->data->print_death_lock);
 	console_log(philo, "died");
 	set_someone_died(philo->data, 1);
+	pthread_mutex_unlock(&philo->data->print_death_lock);
 }
 
 void	philo_eat(t_philo *philo)
@@ -75,12 +77,13 @@ void	philo_eat(t_philo *philo)
 	{
 		if (get_elapsed_time(philo->last_meal) >= philo->data->time_to_die)
 			return (handle_death(philo));
-		usleep(1000);
+		usleep(100);
 	}
 	pickup_forks(philo, right, left);
 	console_log(philo, "is eating");
 	gettimeofday(&philo->last_meal, NULL);
-	usleep(philo->data->time_to_eat * 1000);
+	if (pretend_sleep(philo, philo->data->time_to_eat) == 0)
+		handle_death(philo);
 	philo->dinners_had++;
 	pthread_mutex_unlock(&right->mutex);
 	set_is_locked(right, 0);

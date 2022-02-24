@@ -10,7 +10,7 @@ SRC = main.c						\
 	  lock.c						\
 	  log.c							\
 	  time.c						\
-	  # init.c						\
+	  sleep.c						\
 
 OBJ_DIR = ./obj
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
@@ -33,7 +33,7 @@ fclean: clean
 re: fclean all
 
 run: $(NAME)
-	./$(NAME) 10 400 100 100 7
+	./$(NAME) 3 199 100 100 7
 
 $(OBJ_DIR):
 	mkdir -p ./obj

@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 12:11:49 by psergio-          #+#    #+#             */
-/*   Updated: 2022/02/23 20:03:50 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/02/23 20:36:57 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ struct s_data {
 	int				no_one_died;
 	pthread_mutex_t	no_one_died_mutex;
 	pthread_mutex_t	print_lock;
+	pthread_mutex_t	print_death_lock;
 };
 
 struct s_philo {
@@ -55,6 +56,9 @@ void	run_simulation(t_data *data);
 void	philo_eat(t_philo *philo);
 void	philo_sleep(t_philo *philo);
 void	philo_think(t_philo *philo);
+void	handle_death(t_philo *philo);
+
+int		pretend_sleep(t_philo *philo, long amount);
 
 int		ft_atoi(const char *str);
 

@@ -23,7 +23,9 @@ int main(int argc, char **argv)
 		data.max_meals = ft_atoi(argv[5]);
 	pthread_mutex_init(&data.print_lock, NULL);
 	pthread_mutex_init(&data.no_one_died_mutex, NULL);
+	pthread_mutex_init(&data.print_death_lock, NULL);
 	run_simulation(&data);
 	pthread_mutex_destroy(&data.print_lock);
 	pthread_mutex_destroy(&data.no_one_died_mutex);
+	pthread_mutex_destroy(&data.print_death_lock);
 }
