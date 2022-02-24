@@ -17,10 +17,8 @@
 
 int	pretend_sleep(t_philo *philo, long amount)
 {
-	struct timeval	started_sleeping;
 	long			current;
 
-	gettimeofday(&started_sleeping, NULL);
 	current = 0;
 	while (current < amount)
 	{
