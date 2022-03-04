@@ -32,9 +32,6 @@ fclean: clean
 
 re: fclean all
 
-run: $(NAME)
-	./$(NAME) 3 199 100 100 7
-
 $(OBJ_DIR):
 	mkdir -p ./obj
 
