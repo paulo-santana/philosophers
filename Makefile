@@ -1,39 +1,28 @@
-NAME = philo/philo
+NAME = philosophers
+MANDATORY = philo/philo
+BONUS = philo_bonus/philo_bonus
 
-vpath %.c philo						\
-
-SRC = main.c						\
-	  simulation.c					\
-	  steps.c						\
-	  steps_eating.c				\
-	  ft_atoi.c						\
-	  lock.c						\
-	  log.c							\
-	  time.c						\
-	  sleep.c						\
-
-OBJ_DIR = ./obj
-OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
-
-CC = gcc
-CFLAGS = -Wall -Werror -Wextra -g3
 RM = rm -rf
 
 all: $(NAME)
 
-$(NAME): $(OBJ_DIR) $(OBJ)
-	$(CC) $(OBJ) -o $(NAME)
+$(NAME): $(MANDATORY) $(BONUS)
+
+$(MANDATORY):
+	make -C philo
+
+$(BONUS):
+	make -C philo_bonus
 
 clean:
-	$(RM) $(OBJ_DIR)
+	make -C philo clean
+	make -C philo_bonus clean
 
 fclean: clean
-	$(RM) $(NAME)
+	make -C philo fclean
+	make -C philo_bonus fclean
 
 re: fclean all
 
-$(OBJ_DIR):
-	mkdir -p ./obj
-
-$(OBJ_DIR)/%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+run: $(BONUS)
+	$(BONUS) 4 210 100 100 7
