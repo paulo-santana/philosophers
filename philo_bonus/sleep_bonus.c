@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_eat_bonus.c                                  :+:      :+:    :+:   */
+/*   sleep_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/04 18:14:22 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/05 15:18:02 by psergio-         ###   ########.fr       */
+/*   Created: 2022/03/05 14:41:03 by psergio-          #+#    #+#             */
+/*   Updated: 2022/03/05 14:44:19 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers_bonus.h"
-#include <sys/time.h>
 
-void	philo_eat(t_philo *philo)
+int	pretend_sleep(t_philo *philo, long amount)
 {
-	sem_wait(philo->data->forks);
-	console_log(philo, "has taken a fork");
-	sem_wait(philo->data->forks);
-	console_log(philo, "has taken a fork");
-	console_log(philo, "is eating");
-	gettimeofday(&philo->last_meal, NULL);
-	if (pretend_sleep(philo, philo->data->time_to_eat) == 0)
-		handle_death(philo);
-	philo->dinners_had++;
-	sem_post(philo->data->forks);
-	sem_post(philo->data->forks);
+	long	current;
+
+	current = 0;
+	while (current < amount)
+	{
+		usleep(100);
+		current = get_elapsed_time(philo->last_meal);
+		if (current >= philo->data->time_to_die)
+			return (0);
+	}
+	return (1);
 }

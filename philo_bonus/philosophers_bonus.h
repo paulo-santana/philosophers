@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 15:59:08 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/04 19:01:01 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/03/05 15:33:08 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <unistd.h>
+# include <stdio.h>
 
 typedef struct s_data	t_data;
 typedef struct s_philo	t_philo;
@@ -30,7 +31,8 @@ struct s_data {
 	unsigned int	max_meals;
 	struct timeval	started_at;
 	sem_t			*forks;
-	sem_t			*no_one_died;
+	sem_t			*someone_died;
+	sem_t			*someone_died_lock;
 	sem_t			*print_lock;
 	sem_t			*print_death_lock;
 };
@@ -45,6 +47,17 @@ struct s_philo {
 
 int		ft_atoi(const char *str);
 void	run_simulation(t_data *data);
+
 void	philo_eat(t_philo *philo);
+void	philo_sleep(t_philo *philo);
+void	philo_think(t_philo *philo);
+
+void	set_someone_died(t_data *data);
+int		check_someone_died(t_data *data);
+
+void	console_log(t_philo *philo, char *message);
+long	get_elapsed_time(struct timeval since);
+int		pretend_sleep(t_philo *philo, long amount);
+void	handle_death(t_philo *philo);
 
 #endif

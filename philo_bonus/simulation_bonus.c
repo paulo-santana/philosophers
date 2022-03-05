@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 16:23:31 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/04 19:09:23 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/03/05 15:33:08 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,15 @@ void	philosophize(int index, t_data *data)
 	t_philo	*philo;
 
 	philo = new_philosopher(index, data);
-	while (!sem_wait(philo->data->no_one_died))
+	while (check_someone_died(data) == 0)
 	{
 		philo_eat(philo);
+		if (philo->dinners_had >= philo->data->max_meals)
+			break ;
+		philo_sleep(philo);
+		philo_think(philo);
 	}
+	free(philo);
 	exit(0);
 }
 

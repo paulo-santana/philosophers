@@ -4,11 +4,12 @@ SRC = main_bonus.c					\
 	  simulation_bonus.c			\
 	  ft_atoi_bonus.c				\
 	  philo_eat_bonus.c				\
-#	  steps.c						\
-	  lock.c						\
-	  log.c							\
-	  time.c						\
-	  sleep.c						\
+	  time_bonus.c					\
+	  log_bonus.c					\
+	  death_bonus.c					\
+	  sleep_bonus.c					\
+	  steps_bonus.c					\
+	  lock_bonus.c					\
 
 OBJ_DIR = ./obj
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
@@ -31,7 +32,7 @@ fclean: clean
 re: fclean all
 
 run: all
-	./$(NAME) 4 210 100 100 7
+	./$(NAME) 4 410 200 100 7
 
 $(OBJ_DIR):
 	mkdir -p ./obj

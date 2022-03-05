@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 15:58:43 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/04 19:00:14 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/03/05 15:33:08 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,40 @@ int	validate_args(int argc, char **argv)
 	return (0);
 }
 
+static void	init_semaphores(t_data *data)
+{
+	int	num_philosophers;
+
+	num_philosophers = data->num_philosophers;
+	sem_unlink("/someone_died_lock");
+	sem_unlink("/someone_died");
+	sem_unlink("/print_death");
+	sem_unlink("/print_lock");
+	sem_unlink("/forks");
+	data->someone_died_lock
+		= sem_open("/someone_died_lock", O_CREAT, S_IRUSR | S_IWUSR, 1);
+	data->someone_died
+		= sem_open("/someone_died", O_CREAT, S_IRUSR | S_IWUSR, 0);
+	data->print_death_lock
+		= sem_open("/print_death", O_CREAT, S_IRUSR | S_IWUSR, 1);
+	data->print_lock
+		= sem_open("/print_lock", O_CREAT, S_IRUSR | S_IWUSR, 1);
+	data->forks
+		= sem_open("/forks", O_CREAT, S_IWUSR | S_IRUSR, num_philosophers);
+}
+
+static void	clear_semaphores(t_data *data)
+{
+	sem_close(data->someone_died_lock);
+	sem_close(data->print_death_lock);
+	sem_close(data->print_lock);
+	sem_close(data->forks);
+	sem_unlink("/someone_died_lock");
+	sem_unlink("/print_death");
+	sem_unlink("/print_lock");
+	sem_unlink("/forks");
+}
+
 int	main(int argc, char **argv)
 {
 	t_data	data;
@@ -35,13 +69,9 @@ int	main(int argc, char **argv)
 	data.time_to_eat = ft_atoi(argv[3]);
 	data.time_to_sleep = ft_atoi(argv[4]);
 	data.max_meals = -1;
-	data.no_one_died = sem_open("/no_one_died", O_CREAT, S_IRUSR | S_IWUSR, 1);
-	data.forks = sem_open("/forks", O_CREAT, S_IWUSR | S_IRUSR,
-			data.num_philosophers);
 	if (argc == 6)
 		data.max_meals = ft_atoi(argv[5]);
+	init_semaphores(&data);
 	run_simulation(&data);
-	sem_close(data.no_one_died);
-	sem_unlink("/no_one_died");
-	sem_unlink("/forks");
+	clear_semaphores(&data);
 }
