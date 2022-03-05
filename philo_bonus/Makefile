@@ -3,8 +3,8 @@ NAME = philo_bonus
 SRC = main_bonus.c					\
 	  simulation_bonus.c			\
 	  ft_atoi_bonus.c				\
+	  philo_eat_bonus.c				\
 #	  steps.c						\
-	  steps_eating.c				\
 	  lock.c						\
 	  log.c							\
 	  time.c						\
@@ -29,6 +29,9 @@ fclean: clean
 	$(RM) $(NAME)
 
 re: fclean all
+
+run: all
+	./$(NAME) 4 210 100 100 7
 
 $(OBJ_DIR):
 	mkdir -p ./obj

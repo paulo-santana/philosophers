@@ -6,11 +6,14 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 15:58:43 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/04 17:37:10 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/03/04 19:00:14 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers_bonus.h"
+#include <semaphore.h>
+#include <sys/stat.h>
+#include <stdio.h>
 
 int	validate_args(int argc, char **argv)
 {
@@ -32,8 +35,13 @@ int	main(int argc, char **argv)
 	data.time_to_eat = ft_atoi(argv[3]);
 	data.time_to_sleep = ft_atoi(argv[4]);
 	data.max_meals = -1;
-	data.no_one_died = sem_open("no one no one died", O_CREAT);
+	data.no_one_died = sem_open("/no_one_died", O_CREAT, S_IRUSR | S_IWUSR, 1);
+	data.forks = sem_open("/forks", O_CREAT, S_IWUSR | S_IRUSR,
+			data.num_philosophers);
 	if (argc == 6)
 		data.max_meals = ft_atoi(argv[5]);
 	run_simulation(&data);
+	sem_close(data.no_one_died);
+	sem_unlink("/no_one_died");
+	sem_unlink("/forks");
 }

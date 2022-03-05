@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 15:59:08 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/04 17:27:00 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/03/04 19:01:01 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ struct s_data {
 	unsigned int	time_to_sleep;
 	unsigned int	max_meals;
 	struct timeval	started_at;
-	sem_t			**forks;
+	sem_t			*forks;
 	sem_t			*no_one_died;
 	sem_t			*print_lock;
 	sem_t			*print_death_lock;
@@ -45,5 +45,6 @@ struct s_philo {
 
 int		ft_atoi(const char *str);
 void	run_simulation(t_data *data);
+void	philo_eat(t_philo *philo);
 
 #endif

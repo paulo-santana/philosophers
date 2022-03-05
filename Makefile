@@ -26,3 +26,5 @@ re: fclean all
 
 run: $(BONUS)
 	$(BONUS) 4 210 100 100 7
+
+.PHONY: $(BONUS)
