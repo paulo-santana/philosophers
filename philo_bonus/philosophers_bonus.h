@@ -25,12 +25,13 @@ typedef struct s_philo	t_philo;
 
 struct s_data {
 	int				num_philosophers;
-	unsigned int	time_to_die;
-	unsigned int	time_to_eat;
-	unsigned int	time_to_sleep;
-	unsigned int	max_meals;
+	unsigned long	time_to_die;
+	unsigned long	time_to_eat;
+	unsigned long	time_to_sleep;
+	unsigned long	max_meals;
 	struct timeval	started_at;
 	sem_t			*forks;
+	sem_t			*forks_lock;
 	sem_t			*someone_died;
 	sem_t			*someone_died_lock;
 	sem_t			*print_lock;
@@ -45,19 +46,22 @@ struct s_philo {
 	t_data			*data;
 };
 
-int		ft_atoi(const char *str);
-void	run_simulation(t_data *data);
+int				ft_atoi(const char *str);
+void			run_simulation(t_data *data);
 
-void	philo_eat(t_philo *philo);
-void	philo_sleep(t_philo *philo);
-void	philo_think(t_philo *philo);
+void			philo_eat(t_philo *philo);
+void			philo_sleep(t_philo *philo);
+void			philo_think(t_philo *philo);
 
-void	set_someone_died(t_data *data);
-int		check_someone_died(t_data *data);
+void			set_someone_died(t_philo *philo);
+int				check_someone_died(t_philo *philo);
+int				get_available_forks(t_philo *philo);
+void			take_a_fork(t_philo *philo);
+void			return_a_fork(t_philo *philo);
 
-void	console_log(t_philo *philo, char *message);
-long	get_elapsed_time(struct timeval since);
-int		pretend_sleep(t_philo *philo, long amount);
-void	handle_death(t_philo *philo);
+void			console_log(t_philo *philo, char *message);
+unsigned long	get_elapsed_time(struct timeval since);
+int				pretend_sleep(t_philo *philo, unsigned long amount);
+void			handle_death(t_philo *philo);
 
 #endif

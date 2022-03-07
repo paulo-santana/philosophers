@@ -19,7 +19,7 @@ void	console_log(t_philo *philo, char *message)
 
 	lock = philo->data->print_lock;
 	sem_wait(lock);
-	if (check_someone_died(philo->data) == 0)
+	if (check_someone_died(philo) == 0)
 	{
 		milis = get_elapsed_time(philo->data->started_at);
 		printf("%ld %d %s\n", milis, philo->display_id, message);

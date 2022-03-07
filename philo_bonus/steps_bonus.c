@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "philosophers_bonus.h"
+#include <stdio.h>
 
 void	philo_sleep(t_philo *philo)
 {
@@ -22,5 +23,5 @@ void	philo_sleep(t_philo *philo)
 void	philo_think(t_philo *philo)
 {
 	console_log(philo, "is thinking");
-	usleep(500);
+	usleep(1500);
 }

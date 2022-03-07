@@ -32,7 +32,7 @@ fclean: clean
 re: fclean all
 
 run: all
-	./$(NAME) 4 410 200 100 7
+	./$(NAME) 5 800 200 200 7
 
 $(OBJ_DIR):
 	mkdir -p ./obj

@@ -14,6 +14,8 @@ $(MANDATORY):
 $(BONUS):
 	make -C philo_bonus
 
+bonus: $(BONUS)
+
 clean:
 	make -C philo clean
 	make -C philo_bonus clean

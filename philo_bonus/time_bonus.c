@@ -12,7 +12,7 @@
 
 #include "philosophers_bonus.h"
 
-long	get_elapsed_time(struct timeval since)
+unsigned long	get_elapsed_time(struct timeval since)
 {
 	struct timeval	current_time;
 

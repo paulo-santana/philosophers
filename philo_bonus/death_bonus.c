@@ -15,7 +15,7 @@
 void	handle_death(t_philo *philo)
 {
 	sem_wait(philo->data->print_death_lock);
-	set_someone_died(philo->data);
 	console_log(philo, "died");
+	set_someone_died(philo);
 	sem_post(philo->data->print_death_lock);
 }

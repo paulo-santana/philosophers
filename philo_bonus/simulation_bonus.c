@@ -37,7 +37,7 @@ void	philosophize(int index, t_data *data)
 	t_philo	*philo;
 
 	philo = new_philosopher(index, data);
-	while (check_someone_died(data) == 0)
+	while (check_someone_died(philo) == 0)
 	{
 		philo_eat(philo);
 		if (philo->dinners_had >= philo->data->max_meals)
