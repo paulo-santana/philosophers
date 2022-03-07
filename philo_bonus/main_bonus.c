@@ -23,6 +23,11 @@ int	validate_args(int argc, char **argv)
 	return (0);
 }
 
+static sem_t	*new_semaphore(char *name, int initial_value)
+{
+	return (sem_open(name, O_CREAT, S_IRUSR | S_IWUSR, initial_value));
+}
+
 static void	init_semaphores(t_data *data)
 {
 	int	num_philosophers;
@@ -33,28 +38,29 @@ static void	init_semaphores(t_data *data)
 	sem_unlink("/print_death");
 	sem_unlink("/print_lock");
 	sem_unlink("/forks");
-	data->someone_died_lock
-		= sem_open("/someone_died_lock", O_CREAT, S_IRUSR | S_IWUSR, 1);
-	data->someone_died
-		= sem_open("/someone_died", O_CREAT, S_IRUSR | S_IWUSR, 0);
-	data->print_death_lock
-		= sem_open("/print_death", O_CREAT, S_IRUSR | S_IWUSR, 1);
-	data->print_lock
-		= sem_open("/print_lock", O_CREAT, S_IRUSR | S_IWUSR, 1);
-	data->forks
-		= sem_open("/forks", O_CREAT, S_IWUSR | S_IRUSR, num_philosophers);
+	sem_unlink("/forks_lock");
+	data->someone_died_lock = new_semaphore("/someone_died_lock", 1);
+	data->someone_died = new_semaphore("/someone_died", 0);
+	data->print_death_lock = new_semaphore("/print_death", 1);
+	data->print_lock = new_semaphore("/print_lock", 1);
+	data->forks = new_semaphore("/forks", num_philosophers);
+	data->forks_lock = new_semaphore("/forks_lock", 1);
 }
 
 static void	clear_semaphores(t_data *data)
 {
 	sem_close(data->someone_died_lock);
+	sem_close(data->someone_died);
 	sem_close(data->print_death_lock);
 	sem_close(data->print_lock);
 	sem_close(data->forks);
+	sem_close(data->forks_lock);
 	sem_unlink("/someone_died_lock");
+	sem_unlink("/someone_died");
 	sem_unlink("/print_death");
 	sem_unlink("/print_lock");
 	sem_unlink("/forks");
+	sem_unlink("/forks_lock");
 }
 
 int	main(int argc, char **argv)
