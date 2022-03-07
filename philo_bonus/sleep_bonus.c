@@ -21,7 +21,7 @@ int	pretend_sleep(t_philo *philo, unsigned long amount)
 
 	current = 0;
 	gettimeofday(&started_sleep, NULL);
-	while (current < amount)
+	while (current <= amount)
 	{
 		usleep(100);
 		last_meal = get_elapsed_time(philo->last_meal);

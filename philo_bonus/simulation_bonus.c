@@ -16,6 +16,7 @@
 #include <errno.h>
 #include <sys/wait.h>
 #include <stdio.h>
+#include <unistd.h>
 
 t_philo	*new_philosopher(int index, t_data *data)
 {
@@ -37,6 +38,8 @@ void	philosophize(int index, t_data *data)
 	t_philo	*philo;
 
 	philo = new_philosopher(index, data);
+	if (philo->id % 2 == 0)
+		usleep(500);
 	while (check_someone_died(philo) == 0)
 	{
 		philo_eat(philo);
