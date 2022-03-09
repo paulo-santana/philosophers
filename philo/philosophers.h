@@ -51,24 +51,24 @@ struct s_philo {
 	t_data			*data;
 };
 
-void	run_simulation(t_data *data);
+void			run_simulation(t_data *data);
 
-void	philo_eat(t_philo *philo);
-void	philo_sleep(t_philo *philo);
-void	philo_think(t_philo *philo);
-void	handle_death(t_philo *philo);
+void			philo_eat(t_philo *philo);
+void			philo_sleep(t_philo *philo);
+void			philo_think(t_philo *philo);
+void			handle_death(t_philo *philo);
 
-int		pretend_sleep(t_philo *philo, long amount);
+int				pretend_sleep(t_philo *philo, long amount);
 
-int		ft_atoi(const char *str);
+int				ft_atoi(const char *str);
 
-long	get_elapsed_time(struct timeval since);
+unsigned long	get_elapsed_time(struct timeval since);
 
-void	set_is_locked(t_fork *fork, int value);
-int		is_locked(t_fork *fork);
-void	set_someone_died(t_data *data, int value);
-int		check_someone_died(t_data *data);
+void			set_is_locked(t_fork *fork, int value);
+int				is_locked(t_fork *fork);
+void			set_someone_died(t_data *data, int value);
+int				check_someone_died(t_data *data);
 
-void	console_log(t_philo *philo, char *message);
+void			console_log(t_philo *philo, char *message);
 
 #endif /* !PHILOSOPHERS_H */
