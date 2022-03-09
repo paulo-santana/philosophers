@@ -30,6 +30,7 @@ struct s_data {
 	unsigned long	time_to_sleep;
 	unsigned long	max_meals;
 	struct timeval	started_at;
+	pid_t			*pids;
 	sem_t			*forks;
 	sem_t			*forks_lock;
 	sem_t			*someone_died;

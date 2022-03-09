@@ -33,6 +33,22 @@ t_philo	*new_philosopher(int index, t_data *data)
 	return (philo);
 }
 
+static void	clear_semaphores(t_data *data)
+{
+	sem_close(data->someone_died_lock);
+	sem_close(data->someone_died);
+	sem_close(data->print_death_lock);
+	sem_close(data->print_lock);
+	sem_close(data->forks);
+	sem_close(data->forks_lock);
+	sem_unlink("/someone_died_lock");
+	sem_unlink("/someone_died");
+	sem_unlink("/print_death");
+	sem_unlink("/print_lock");
+	sem_unlink("/forks");
+	sem_unlink("/forks_lock");
+}
+
 void	philosophize(int index, t_data *data)
 {
 	t_philo	*philo;
@@ -49,10 +65,12 @@ void	philosophize(int index, t_data *data)
 		philo_think(philo);
 	}
 	free(philo);
+	clear_semaphores(data);
+	free(data->pids);
 	exit(0);
 }
 
-void	collect_childs(pid_t *pids, t_data *data)
+void	collect_childs(t_data *data)
 {
 	int	i;
 	int	wstatus;
@@ -60,19 +78,19 @@ void	collect_childs(pid_t *pids, t_data *data)
 	i = 0;
 	while (i < data->num_philosophers)
 	{
-		waitpid(pids[i], &wstatus, 0);
+		waitpid(data->pids[i], &wstatus, 0);
 		i++;
 	}
+	free(data->pids);
 }
 
 void	run_simulation(t_data *data)
 {
 	int		i;
 	pid_t	pid;
-	pid_t	*pids;
 
-	pids = malloc(sizeof(pid_t) * data->num_philosophers);
-	if (pids == NULL)
+	data->pids = malloc(sizeof(pid_t) * data->num_philosophers);
+	if (data->pids == NULL)
 		exit(ENOMEM);
 	i = 0;
 	while (i < data->num_philosophers)
@@ -81,8 +99,8 @@ void	run_simulation(t_data *data)
 		if (pid == 0)
 			philosophize(i, data);
 		else
-			pids[i] = pid;
+			data->pids[i] = pid;
 		i++;
 	}
-	collect_childs(pids, data);
+	collect_childs(data);
 }
