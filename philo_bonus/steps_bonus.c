@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "philosophers_bonus.h"
-#include <stdio.h>
 
 void	philo_sleep(t_philo *philo)
 {

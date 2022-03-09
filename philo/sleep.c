@@ -11,9 +11,6 @@
 /* ************************************************************************** */
 
 #include "philosophers.h"
-#include <bits/types/struct_timeval.h>
-#include <sys/time.h>
-#include <unistd.h>
 
 int	pretend_sleep(t_philo *philo, long amount)
 {
