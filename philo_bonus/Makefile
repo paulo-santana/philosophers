@@ -3,6 +3,7 @@ NAME = philo_bonus
 SRC = main_bonus.c					\
 	  simulation_bonus.c			\
 	  ft_atoi_bonus.c				\
+	  number_validation_bonus.c		\
 	  philo_eat_bonus.c				\
 	  time_bonus.c					\
 	  log_bonus.c					\

@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 15:58:43 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/05 15:33:08 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/03/09 22:09:17 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,39 @@
 #include <sys/stat.h>
 #include <stdio.h>
 
+int	print_help(char *program_name)
+{
+	printf("Usage: %s time_to_die time_to_eat time_to_sleep [max_meals]\n\n",
+		program_name);
+	printf("Where:\n"
+		"\ttime_to_die: the time it takes for a philosopher"
+		" to die after his last meal\n"
+		"\ttime_to_eat: the time it takes for a philosopher to eat\n"
+		"\ttime_to_sleep: the time it takes for a philosopher to sleep\n"
+		"\tmax_meals (optional): the simulation will stop after each"
+		" philosopher eat this many times\n\n"
+		"All the times are in milliseconds.\n"
+		"All arguments must be positive integers\n"
+		);
+	return (0);
+}
+
 int	validate_args(int argc, char **argv)
 {
-	(void)argv;
-	if (argc == 5 || argc == 6)
-		return (1);
-	return (0);
+	int	i;
+
+	if (argc != 5 && argc != 6)
+		return (print_help(argv[0]));
+	i = 1;
+	while (i < argc)
+	{
+		if (!is_int(argv[i]))
+			return (print_help(argv[0]));
+		if (ft_atoi(argv[i]) < 0)
+			return (print_help(argv[0]));
+		i++;
+	}
+	return (argc);
 }
 
 static sem_t	*new_semaphore(char *name, int initial_value)
@@ -45,22 +72,6 @@ static void	init_semaphores(t_data *data)
 	data->print_lock = new_semaphore("/print_lock", 1);
 	data->forks = new_semaphore("/forks", num_philosophers);
 	data->forks_lock = new_semaphore("/forks_lock", 1);
-}
-
-static void	clear_semaphores(t_data *data)
-{
-	sem_close(data->someone_died_lock);
-	sem_close(data->someone_died);
-	sem_close(data->print_death_lock);
-	sem_close(data->print_lock);
-	sem_close(data->forks);
-	sem_close(data->forks_lock);
-	sem_unlink("/someone_died_lock");
-	sem_unlink("/someone_died");
-	sem_unlink("/print_death");
-	sem_unlink("/print_lock");
-	sem_unlink("/forks");
-	sem_unlink("/forks_lock");
 }
 
 int	main(int argc, char **argv)

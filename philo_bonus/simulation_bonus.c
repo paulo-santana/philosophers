@@ -33,7 +33,7 @@ t_philo	*new_philosopher(int index, t_data *data)
 	return (philo);
 }
 
-static void	clear_semaphores(t_data *data)
+void	clear_semaphores(t_data *data)
 {
 	sem_close(data->someone_died_lock);
 	sem_close(data->someone_died);

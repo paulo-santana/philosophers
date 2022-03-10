@@ -47,8 +47,10 @@ struct s_philo {
 	t_data			*data;
 };
 
+int				is_int(char *number);
 int				ft_atoi(const char *str);
 void			run_simulation(t_data *data);
+void			clear_semaphores(t_data *data);
 
 void			philo_eat(t_philo *philo);
 void			philo_sleep(t_philo *philo);
