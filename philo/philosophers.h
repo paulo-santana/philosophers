@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 12:11:49 by psergio-          #+#    #+#             */
-/*   Updated: 2022/02/23 20:36:57 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/03/09 21:18:05 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void			handle_death(t_philo *philo);
 
 int				pretend_sleep(t_philo *philo, long amount);
 
+int				is_int(char *number);
 int				ft_atoi(const char *str);
 
 unsigned long	get_elapsed_time(struct timeval since);

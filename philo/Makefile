@@ -5,6 +5,7 @@ SRC = main.c						\
 	  steps.c						\
 	  steps_eating.c				\
 	  ft_atoi.c						\
+	  number_validation.c			\
 	  lock.c						\
 	  log.c							\
 	  time.c						\
