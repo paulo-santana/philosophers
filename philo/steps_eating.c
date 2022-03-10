@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 09:55:16 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/05 14:19:46 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/03/09 22:03:14 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ void	philo_eat(t_philo *philo)
 	t_fork	*right;
 	t_fork	*left;
 
+	if (get_elapsed_time(philo->last_meal) >= philo->data->time_to_die)
+		return (handle_death(philo));
 	if (check_someone_died(philo->data))
 		return ;
 	identify_forks(philo, &right, &left);
