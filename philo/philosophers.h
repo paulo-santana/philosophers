@@ -36,6 +36,7 @@ struct s_data {
 	unsigned int	time_to_sleep;
 	unsigned int	max_meals;
 	t_fork			*forks;
+	t_philo			*phillosophers;
 	struct timeval	started_at;
 	int				no_one_died;
 	pthread_mutex_t	no_one_died_mutex;

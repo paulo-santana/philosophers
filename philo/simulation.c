@@ -14,22 +14,8 @@
 #include <bits/pthreadtypes.h>
 #include <pthread.h>
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
-
-t_philo	*new_philosopher(int id, t_data *data)
-{
-	t_philo	*philo;
-
-	philo = malloc(sizeof(t_philo));
-	if (philo == NULL)
-		return (NULL);
-	philo->id = id;
-	philo->display_id = id + 1;
-	philo->data = data;
-	philo->last_meal = data->started_at;
-	philo->dinners_had = 0;
-	return (philo);
-}
 
 void	*philosophize(void *data)
 {
@@ -50,13 +36,22 @@ void	*philosophize(void *data)
 void	init_philosophers(pthread_t *ids, t_data *data)
 {
 	int				i;
-	t_philo			*philosopher;
+	t_philo			*philosophers;
+	t_philo			*philo;
 
 	i = 0;
+	philosophers = malloc(sizeof(t_philo) * data->num_philosophers);
+	memset(philosophers, 0, sizeof(t_philo) * data->num_philosophers);
+	data->phillosophers = philosophers;
 	while (i < data->num_philosophers)
 	{
-		philosopher = new_philosopher(i, data);
-		pthread_create(&ids[i], NULL, philosophize, philosopher);
+		philo = &philosophers[i];
+		philo->id = i;
+		philo->display_id = i + 1;
+		philo->data = data;
+		philo->last_meal = data->started_at;
+		philo->dinners_had = 0;
+		pthread_create(&ids[i], NULL, philosophize, philo);
 		i++;
 	}
 }
@@ -94,7 +89,6 @@ void	destroy_forks(t_data *data)
 
 void	run_simulation(t_data *data)
 {
-	t_philo		*philo;
 	pthread_t	*philosopher_ids;
 	int			i;
 
@@ -106,10 +100,10 @@ void	run_simulation(t_data *data)
 	i = 0;
 	while (i < data->num_philosophers)
 	{
-		pthread_join(philosopher_ids[i], (void **)&philo);
-		free(philo);
+		pthread_join(philosopher_ids[i], NULL);
 		i++;
 	}
 	destroy_forks(data);
 	free(philosopher_ids);
+	free(data->phillosophers);
 }
