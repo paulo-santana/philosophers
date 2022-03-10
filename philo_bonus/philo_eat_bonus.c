@@ -50,6 +50,8 @@ static int	can_eat(t_philo *philo)
 
 void	philo_eat(t_philo *philo)
 {
+	if (get_elapsed_time(philo->last_meal) >= philo->data->time_to_die)
+		return (handle_death(philo));
 	while (!can_eat(philo))
 	{
 		if (get_elapsed_time(philo->last_meal) >= philo->data->time_to_die)
