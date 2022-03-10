@@ -13,18 +13,6 @@
 #include "philosophers_bonus.h"
 #include <sys/time.h>
 
-// static void	pickup_forks(t_philo *philo)
-// {
-// 	while (!take_a_fork(philo))
-// 		if (pretend_sleep(philo, 1) == 0)
-// 			return (handle_death(philo));
-// 	console_log(philo, "has taken a fork");
-// 	while (!take_a_fork(philo))
-// 		if (pretend_sleep(philo, 1) == 0)
-// 			return (handle_death(philo));
-// 	console_log(philo, "has taken a fork");
-// }
-
 static void	pickup_forks(t_philo *philo)
 {
 	sem_wait(philo->data->forks);
