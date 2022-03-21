@@ -6,7 +6,7 @@ RM = rm -rf
 
 all: $(NAME)
 
-$(NAME): $(MANDATORY) $(BONUS)
+$(NAME): $(MANDATORY)
 
 $(MANDATORY):
 	make -C philo
@@ -26,7 +26,5 @@ fclean: clean
 
 re: fclean all
 
-run: $(BONUS)
-	$(BONUS) 4 210 100 100 7
-
-.PHONY: $(BONUS)
+run: $(MANDATORY)
+	$(MANDATORY) 4 210 100 100 7
