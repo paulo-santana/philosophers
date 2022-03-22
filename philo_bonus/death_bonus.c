@@ -11,11 +11,20 @@
 /* ************************************************************************** */
 
 #include "philosophers_bonus.h"
+#include <semaphore.h>
 
 void	handle_death(t_philo *philo)
 {
+	long	milis;
+
+	sem_wait(philo->data->print_lock);
 	sem_wait(philo->data->print_death_lock);
-	console_log(philo, "died");
+	if (check_someone_died(philo) == 0)
+	{
+		milis = get_elapsed_time(philo->data->started_at);
+		printf("%ld %d %s\n", milis, philo->display_id, "died");
+	}
 	set_someone_died(philo);
 	sem_post(philo->data->print_death_lock);
+	sem_post(philo->data->print_lock);
 }

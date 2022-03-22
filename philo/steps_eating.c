@@ -59,10 +59,16 @@ int	can_eat(t_philo *philo, t_fork *right_fork, t_fork *left_fork)
 
 void	handle_death(t_philo *philo)
 {
+	long	milis;
+
+	pthread_mutex_lock(&philo->data->print_lock);
 	pthread_mutex_lock(&philo->data->print_death_lock);
-	console_log(philo, "died");
+	milis = get_elapsed_time(philo->data->started_at);
+	if (!check_someone_died(philo->data))
+		printf("%ld %d %s\n", milis, philo->display_id, "died");
 	set_someone_died(philo->data, 1);
 	pthread_mutex_unlock(&philo->data->print_death_lock);
+	pthread_mutex_unlock(&philo->data->print_lock);
 }
 
 void	philo_eat(t_philo *philo)
