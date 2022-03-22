@@ -16,8 +16,11 @@
 static void	pickup_forks(t_philo *philo)
 {
 	sem_wait(philo->data->forks);
-	sem_wait(philo->data->forks);
 	console_log(philo, "has taken a fork");
+	while (get_available_forks(philo) < 1)
+		if (pretend_sleep(philo, 1) == 0)
+			return (handle_death(philo));
+	sem_wait(philo->data->forks);
 	console_log(philo, "has taken a fork");
 }
 

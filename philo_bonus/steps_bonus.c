@@ -21,6 +21,14 @@ void	philo_sleep(t_philo *philo)
 
 void	philo_think(t_philo *philo)
 {
+	long	safe_time_to_think;
+
 	console_log(philo, "is thinking");
-	usleep(250);
+	safe_time_to_think = philo->data->time_to_die - philo->data->time_to_eat
+		- philo->data->time_to_sleep;
+	safe_time_to_think /= 2;
+	if (safe_time_to_think < 0)
+		return ;
+	pretend_sleep(philo, safe_time_to_think);
+	console_log(philo, "finished thinking");
 }
