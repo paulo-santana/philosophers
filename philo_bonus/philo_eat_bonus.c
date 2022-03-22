@@ -29,7 +29,7 @@ static int	can_eat(t_philo *philo)
 		return (0);
 	available_forks = *(int *)philo->data->forks;
 	if (get_elapsed_time(philo->last_meal) > philo->data->time_to_die / 2
-		&& available_forks >= 2)
+		&& available_forks >= 1)
 		return (1);
 	if (available_forks >= 2)
 		return (1);
