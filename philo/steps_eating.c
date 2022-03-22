@@ -40,6 +40,9 @@ void	pickup_forks(t_philo *philo, t_fork *right, t_fork *left)
 	pthread_mutex_lock(&first->mutex);
 	set_is_locked(first, 1);
 	console_log(philo, "has taken a fork");
+	while (is_locked(second))
+		if (pretend_sleep(philo, 1) == 0)
+			return (handle_death(philo));
 	pthread_mutex_lock(&second->mutex);
 	set_is_locked(second, 1);
 	console_log(philo, "has taken a fork");
