@@ -22,7 +22,7 @@ RM = rm -rf
 all: $(NAME)
 
 $(NAME): $(OBJ_DIR) $(OBJ)
-	$(CC) $(OBJ) -o $(NAME)
+	$(CC) $(OBJ) -o $(NAME) -pthread
 
 clean:
 	$(RM) $(OBJ_DIR)
