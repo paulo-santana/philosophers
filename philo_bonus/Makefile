@@ -21,6 +21,8 @@ RM = rm -rf
 
 all: $(NAME)
 
+bonus: all
+
 $(NAME): $(OBJ_DIR) $(OBJ)
 	$(CC) $(OBJ) -o $(NAME) -pthread
 
